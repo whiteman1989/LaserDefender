@@ -8,11 +8,25 @@ public class PlayerController : MonoBehaviour {
 	public GameObject projectile;
 	public float projectileSeed = 1f;
 	public float fireRate = 1f;
-	public int health = 300;
+	public float reloadRate = 1f;
+	public int maxHealth = 300;
+	public GameObject HitParticle;
+	public int maxAmmo = 3;
+	public AudioClip error;
+
+	private int currentHealth;
+
+	public AudioClip gunSound;
+
+	private int curentAmo;
+
 
 	// Use this for initialization
 	void Start () {
 		FindMinAndMax (ref minX,ref maxX);
+		curentAmo = maxAmmo;
+		InvokeRepeating("Reload", 0.0000001f, reloadRate) ;
+		currentHealth = maxHealth;
 	}
 	
 	// Update is called once per frame
@@ -37,11 +51,12 @@ public class PlayerController : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D col){
 		Projectile bullet = col.gameObject.GetComponent<Projectile> ();
 		if (bullet) {
-			health -= bullet.GetDamage();
-			if (health <=0 ){
-				Destroy(gameObject);
+			currentHealth -= bullet.GetDamage();
+			HitEffects(col);
+			if (currentHealth <=0 ){
+				Die ();
 			}
-			Debug.Log("Hit by a projectile "+health);
+			Debug.Log("Hit by a projectile "+currentHealth);
 		}
 	}
 
@@ -54,13 +69,46 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void Fire (float fireSpeed){
-		Vector3 startPosition = transform.position + new Vector3 (0f, 0.7f, 0f);
-		GameObject beam = Instantiate(projectile, startPosition, Quaternion.identity) as GameObject;
-		beam.rigidbody2D.velocity = Vector2.up * fireSpeed; 
+		if (curentAmo > 0) {
+			Vector3 startPosition = transform.position + new Vector3 (0f, 0.7f, 0f);
+			GameObject beam = Instantiate (projectile, startPosition, Quaternion.identity) as GameObject;
+			beam.rigidbody2D.velocity = Vector2.up * fireSpeed;
+			AudioSource.PlayClipAtPoint (gunSound, startPosition);
+			curentAmo--;
+		} else {
+			AudioSource.PlayClipAtPoint (error, gameObject.transform.position);
+		}
 	}
 
 	void FireRate(){
 		Fire (projectileSeed);
 	}
 
+	void Die ()
+	{
+		LevelManager manager = GameObject.Find ("LevelManager").GetComponent<LevelManager> ();
+		manager.LoadLevel ("Win");
+		CancelInvoke("Reload");
+		Destroy (gameObject);
+	}
+
+	void HitEffects(Collider2D col){
+		Instantiate(HitParticle, new Vector3(col.transform.position.x, col.transform.position.y, 0), Quaternion.identity);
+	}
+
+	public int GetCurentAmo(){
+		return curentAmo;
+	}
+
+	void Reload(){
+		if (!Input.GetKey (KeyCode.Space)) {
+			if (curentAmo < maxAmmo) {
+				curentAmo++;
+			}
+		}
+	}
+
+	public int GetHealth(){
+		return currentHealth;
+	}
 }

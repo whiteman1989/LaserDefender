@@ -7,6 +7,10 @@ public class EnemyBehaviour : MonoBehaviour {
 	public float projectileSped = 8f;
 	public float shotsPerSecond =1f; 
 	public int scoreValue = 150;
+	public AudioClip gunSound;
+	public GameObject hitEffect;
+	public GameObject destroyEffect;
+	public AudioClip destriySound;
 
 	private ScoreKeeper scoreKeeper;
 
@@ -26,8 +30,10 @@ public class EnemyBehaviour : MonoBehaviour {
 		Projectile bullet = col.gameObject.GetComponent<Projectile> ();
 		if (bullet) {
 			health -= bullet.GetDamage();
+			HitEffects(col);
 			if (health <=0 ){
-				scoreKeeper.Score(scoreValue);
+				scoreKeeper.Score = scoreValue;
+				DestroyEffect(col);
 				Destroy(gameObject);
 			}
 			Debug.Log("Hit by a projectile");
@@ -38,5 +44,15 @@ public class EnemyBehaviour : MonoBehaviour {
 		Vector3 startPosition = transform.position + new Vector3 (0f, -0.6f, 0f);
 		GameObject bullet = Instantiate (projectile, startPosition, Quaternion.identity) as GameObject;
 		bullet.rigidbody2D.velocity = new Vector3 (0f, - projectileSped, 0f);
+		AudioSource.PlayClipAtPoint (gunSound, startPosition);
+	}
+
+	void HitEffects(Collider2D col){
+		Instantiate(hitEffect, new Vector3(col.transform.position.x, col.transform.position.y, 0), Quaternion.identity);
+	}
+
+	void DestroyEffect (Collider2D col){
+		Instantiate(destroyEffect, new Vector3(col.transform.position.x, col.transform.position.y, 0), Quaternion.identity);
+		AudioSource.PlayClipAtPoint (destriySound, col.transform.position);
 	}
 }

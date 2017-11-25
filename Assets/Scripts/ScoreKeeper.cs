@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class ScoreKeeper : MonoBehaviour {
 
-	private int score = 0;
+	private static int score = 0;
 	private Text scoreField;
 
 	// Use this for initialization
@@ -14,13 +14,22 @@ public class ScoreKeeper : MonoBehaviour {
 	}
 	
 
-	public void Score (int points){
-		score += points;
-		UpdateSoreField();
+	public int Score 
+	{
+		get
+		{
+			return score;
+		}
+		set
+		{
+			score += value;
+			UpdateSoreField();
+		}
 	}
 
+
 	public void Reset (){
-		score = 0;
+		ResetScore ();
 		UpdateSoreField();
 	}
 
@@ -31,4 +40,14 @@ public class ScoreKeeper : MonoBehaviour {
 	void UpdateSoreField(){
 		scoreField.text = score.ToString();
 	}
+
+	public static void ResetScore(){
+		score = 0;
+	}
+
+	public static int GetScore(){
+		return score;
+	}
+
+
 }
