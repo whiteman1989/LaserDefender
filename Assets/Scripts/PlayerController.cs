@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour {
 		if (curentAmo > 0) {
 			Vector3 startPosition = transform.position + new Vector3 (0f, 0.7f, 0f);
 			GameObject beam = Instantiate (projectile, startPosition, Quaternion.identity) as GameObject;
-			beam.rigidbody2D.velocity = Vector2.up * fireSpeed;
+			beam.GetComponent<Rigidbody2D>().velocity = Vector2.up * fireSpeed;
 			AudioSource.PlayClipAtPoint (gunSound, startPosition);
 			curentAmo--;
 		} else {

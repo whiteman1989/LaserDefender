@@ -47,7 +47,7 @@ public class EnemySpawner : MonoBehaviour {
 		foreach (Transform child in transform) {
 			Spawn(prefab, child.transform.position, child);
 			count ++;
-			print (count);
+			//print (count);
 			if (count >=10){
 				break;
 			}

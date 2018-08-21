@@ -20,7 +20,7 @@ public class AmmoCounter : MonoBehaviour {
 		maxAmmo = playerScript.maxAmmo;
 		for (int i = 0; i < maxAmmo; i++) {
 			GameObject icon = Instantiate (ammoIcon) as GameObject;
-			icon.transform.parent = gameObject.transform;
+			icon.transform.SetParent(gameObject.transform);
 		}
 	}
 	
