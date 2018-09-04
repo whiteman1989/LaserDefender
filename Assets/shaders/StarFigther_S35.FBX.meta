@@ -1,0 +1,194 @@
+fileFormatVersion: 2
+guid: 3f980c580846a4c478766cef33aa0ace
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: back wimg
+    100002: back wimg001
+    100004: back_el_l
+    100006: bask_el_r
+    100008: Cocpit_glass
+    100010: Cocpit_metal
+    100012: Conteiner
+    100014: Conteiner001
+    100016: Cylinder001
+    100018: Eleron
+    100020: Eleron001
+    100022: Opt_glass
+    100024: Opt_metal
+    100026: Pilaon_l002
+    100028: Pilaon_l1
+    100030: pilon_l004
+    100032: pilon_l005
+    100034: pilon_l2
+    100036: pilon_l3
+    100038: //RootNode
+    100040: wing
+    100042: wing001
+    400000: back wimg
+    400002: back wimg001
+    400004: back_el_l
+    400006: bask_el_r
+    400008: Cocpit_glass
+    400010: Cocpit_metal
+    400012: Conteiner
+    400014: Conteiner001
+    400016: Cylinder001
+    400018: Eleron
+    400020: Eleron001
+    400022: Opt_glass
+    400024: Opt_metal
+    400026: Pilaon_l002
+    400028: Pilaon_l1
+    400030: pilon_l004
+    400032: pilon_l005
+    400034: pilon_l2
+    400036: pilon_l3
+    400038: //RootNode
+    400040: wing
+    400042: wing001
+    2100000: No Name
+    2300000: back wimg
+    2300002: back wimg001
+    2300004: back_el_l
+    2300006: bask_el_r
+    2300008: Cocpit_glass
+    2300010: Cocpit_metal
+    2300012: Conteiner
+    2300014: Conteiner001
+    2300016: Cylinder001
+    2300018: Eleron
+    2300020: Eleron001
+    2300022: Opt_glass
+    2300024: Opt_metal
+    2300026: Pilaon_l002
+    2300028: Pilaon_l1
+    2300030: pilon_l004
+    2300032: pilon_l005
+    2300034: pilon_l2
+    2300036: pilon_l3
+    2300038: wing
+    2300040: wing001
+    3300000: back wimg
+    3300002: back wimg001
+    3300004: back_el_l
+    3300006: bask_el_r
+    3300008: Cocpit_glass
+    3300010: Cocpit_metal
+    3300012: Conteiner
+    3300014: Conteiner001
+    3300016: Cylinder001
+    3300018: Eleron
+    3300020: Eleron001
+    3300022: Opt_glass
+    3300024: Opt_metal
+    3300026: Pilaon_l002
+    3300028: Pilaon_l1
+    3300030: pilon_l004
+    3300032: pilon_l005
+    3300034: pilon_l2
+    3300036: pilon_l3
+    3300038: wing
+    3300040: wing001
+    4300000: Cylinder001
+    4300002: Conteiner
+    4300004: wing
+    4300006: Cocpit_glass
+    4300008: Eleron
+    4300010: back wimg
+    4300012: Opt_glass
+    4300014: Opt_metal
+    4300016: back wimg001
+    4300018: Eleron001
+    4300020: Conteiner001
+    4300022: Pilaon_l1
+    4300024: pilon_l2
+    4300026: pilon_l3
+    4300028: Pilaon_l002
+    4300030: pilon_l004
+    4300032: pilon_l005
+    4300034: Cocpit_metal
+    4300036: bask_el_r
+    4300038: back_el_l
+    4300040: wing001
+    9500000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

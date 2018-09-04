@@ -10,6 +10,7 @@ public class EnemyBehaviour : MonoBehaviour {
 	public AudioClip gunSound;
 	public GameObject hitEffect;
 	public GameObject destroyEffect;
+    public GameObject derbish;
 	public AudioClip destriySound;
 
 	private ScoreKeeper scoreKeeper;
@@ -36,7 +37,7 @@ public class EnemyBehaviour : MonoBehaviour {
 				DestroyEffect(col);
 				Destroy(gameObject);
 			}
-			Debug.Log("Hit by a projectile");
+			//Debug.Log("Hit by a projectile");
 		}
 	}
 
@@ -53,6 +54,7 @@ public class EnemyBehaviour : MonoBehaviour {
 
 	void DestroyEffect (Collider2D col){
 		Instantiate(destroyEffect, new Vector3(col.transform.position.x, col.transform.position.y, 0), Quaternion.identity);
-		AudioSource.PlayClipAtPoint (destriySound, col.transform.position);
+        Instantiate(derbish, new Vector3(col.transform.position.x, col.transform.position.y, 0), Quaternion.identity);
+        AudioSource.PlayClipAtPoint (destriySound, col.transform.position);
 	}
 }

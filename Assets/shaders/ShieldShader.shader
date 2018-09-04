@@ -1,9 +1,11 @@
-﻿Shader "CookbookShaders/Field" {
+﻿Shader "FX/Field2D" {
 	Properties {
 		_EmissiveColor("Emissive Color", Color) = (1,1,1,1)
 		_ShieldColor("Shield Color", Color) = (1,1,1,1)
 		_Transparence("Transparence", Range(0,1)) = 1.0
-		_RimValue ("Rim value", Range (0,1)) = 0.5
+		_EmmisionStrength("Emission Strength", Range(0,3)) =1.0
+		_RimFill ("Rim Fill", Range (0,1)) = 0.1
+		_RimValue ("Rim Value", Range (0.5, 5)) = 3.0
 		_ScrollXSpeed ("X Scroll Speed", Range(-5, 5)) = 0
 		_ScrollYSpeed ("Y Scroll Speed", Range(-5, 5)) = 0
 		_ShieldAlfa("Shield Alfa" , 2D) = "white" 
@@ -37,18 +39,20 @@
 		float _Transparence;
 		fixed _ScrollXSpeed;
 		fixed _ScrollYSpeed;
+		fixed _RimFill;
+		fixed _EmmisionStrength;
 		fixed _RimValue;
 		
 
 
 		inline float4 LightingField(SurfaceOutput s, fixed3 lightDir, half3 viewDir, fixed atten)
 		{
-			float rimLight = dot(s.Normal, viewDir);
-			float hRim = 1 - abs(rimLight);//rimLight * 0.5 + 0.5;
+			float rimLight = dot(s.Normal, half3(0,0,1));
+			float hRim = 1 - abs(rimLight)*(1-_RimFill)+_RimFill;
 			float4 col;
 
 			col.rgb = s.Albedo * _EmissiveColor.rgb;
-			col.a = s.Alpha * (hRim*hRim*_RimValue);
+			col.a = s.Alpha * pow( hRim , _RimValue ) ;
 			return col;
 		}
 
@@ -58,7 +62,7 @@
 			fixed varY = _ScrollYSpeed * _Time;
 			fixed2 uv_Tex = IN.uv_ShieldAlfa + fixed2(varX, varY);
 			fixed3 texColor = tex2D(_ShieldAlfa, uv_Tex).rgb;
-			o.Albedo = _ShieldColor;
+			o.Emission = _ShieldColor * _EmmisionStrength;
 			o.Alpha = texColor.b * _Transparence;
 		}
 

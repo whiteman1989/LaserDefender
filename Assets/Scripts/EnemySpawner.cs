@@ -23,7 +23,7 @@ public class EnemySpawner : MonoBehaviour {
 		MoveFormation (ref movingRigth);
 
 		if (AllMembersDead()) {
-			Debug.Log("Empty Formation");
+			//Debug.Log("Empty Formation");
 			SpawnUntilFull ();
 		}
 	}
