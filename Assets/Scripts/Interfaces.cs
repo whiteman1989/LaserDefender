@@ -4,15 +4,15 @@ using UnityEngine;
 
 public enum DamageTypes {Kinetic, Electric, Missile, Beam, none };
 
-public interface IDemageble<T>
+public interface IDamageble<T>
 {
-    void Demage(T damageTaken);
+    void Damage(T damageTaken);
     void Damage(T damageTaken, DamageTypes damageType);
     void Healing(T healing);
     T GetMaxHealth();
     T GetCurrentHealth();
     void SetHealth(T newHealth);
-    void SemMaxHealth(T newMaxHealth);
+    void SetMaxHealth(T newMaxHealth);
     void Kill();
 }
 
@@ -52,5 +52,5 @@ public interface IProjectile<T>
 
 public interface IAttached
 {
-    void GetParentForAttached();
+    Transform GetParentForAttached();
 }

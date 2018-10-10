@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour, IDamageble<int> {
     [Header("Movement")]
 	public float speed = 1f;
     [SerializeField] float padding = 1f;
@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour {
     private float maxX = 5f;
     private float minY = -5f;
     private float maxY = 5f;
+    private Coroutine fireCoroutine;
 
 
     // Use this for initialization
@@ -51,27 +52,17 @@ public class PlayerController : MonoBehaviour {
     {
         if (Input.GetButtonDown("Fire1"))
         {
-            InvokeRepeating("FireRate", 0.000001f, fireRate);
+            fireCoroutine = StartCoroutine(Fire(projectileSpeed, fireRate));
         }
         if (Input.GetButtonUp("Fire1"))
         {
-            CancelInvoke("FireRate");
+            StopCoroutine(fireCoroutine);
         }
 
         Move();
     }
 
-    private void Move()
-    {
-        //horiontal move
-        float deltaPosX = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
-        float deltaPosY = Input.GetAxis("Vertical") * Time.deltaTime * speed;
-        float newPosX = Mathf.Clamp(transform.position.x + deltaPosX, minX, maxX );
-        float newPosY = Mathf.Clamp(transform.position.y + deltaPosY, minY, maxY);
-        transform.position = new Vector3(newPosX, newPosY, transform.position.z);
-    }
-
-    void OnTriggerEnter2D(Collider2D col){
+   /* void OnTriggerEnter2D(Collider2D col){
 		Projectile bullet = col.gameObject.GetComponent<Projectile> ();
 		if (bullet) {
 			currentHealth -= bullet.GetDamage();
@@ -81,9 +72,20 @@ public class PlayerController : MonoBehaviour {
 			}
 			//Debug.Log("Hit by a projectile "+currentHealth);
 		}
-	}
+	} */
 
-	void FindMinAndMax (ref float minX, ref float maxX, ref float minY, ref float maxY){
+    private void Move()
+    {
+        //horiontal move
+        float deltaPosX = Input.GetAxis("Horizontal") * Time.deltaTime * speed;
+        float deltaPosY = Input.GetAxis("Vertical") * Time.deltaTime * speed;
+        float newPosX = Mathf.Clamp(transform.position.x + deltaPosX, minX, maxX);
+        float newPosY = Mathf.Clamp(transform.position.y + deltaPosY, minY, maxY);
+        transform.position = new Vector3(newPosX, newPosY, transform.position.z);
+    }
+
+
+    void FindMinAndMax (ref float minX, ref float maxX, ref float minY, ref float maxY){
 		float distance = transform.position.z - Camera.main.transform.position.z;
 		Vector3 leftmost = Camera.main.ViewportToWorldPoint (new Vector3 (0, 0, distance));
 		Vector3 rightmost = Camera.main.ViewportToWorldPoint (new Vector3 (1, 1, distance));
@@ -93,21 +95,25 @@ public class PlayerController : MonoBehaviour {
         maxY = rightmost.y - padding;
 	}
 
-	void Fire (float fireSpeed){
-		if (curentAmo > 0) {
-			Vector3 startPosition = transform.position + new Vector3 (0f, 0.7f, 0f);
-			GameObject beam = Instantiate (projectile, startPosition, Quaternion.identity) as GameObject;
-			beam.GetComponent<Rigidbody2D>().velocity = Vector2.up * fireSpeed;
-			AudioSource.PlayClipAtPoint (gunSound, startPosition);
-			curentAmo--;
-		} else {
-			AudioSource.PlayClipAtPoint (error, gameObject.transform.position);
-		}
+	IEnumerator Fire (float fireSpeed, float fireRate){
+        while (true)
+        {
+            if (curentAmo > 0)
+            {
+                Vector3 startPosition = transform.position + new Vector3(0f, 0.7f, 0f);
+                GameObject beam = Instantiate(projectile, startPosition, Quaternion.identity) as GameObject;
+                beam.GetComponent<Rigidbody2D>().velocity = Vector2.up * fireSpeed;
+                AudioSource.PlayClipAtPoint(gunSound, startPosition);
+                curentAmo--;
+            }
+            else
+            {
+                AudioSource.PlayClipAtPoint(error, gameObject.transform.position);
+            }
+            yield return new WaitForSeconds(fireRate);
+        }
 	}
 
-	void FireRate(){
-		Fire (projectileSpeed);
-	}
 
 	void Die ()
 	{
@@ -118,7 +124,15 @@ public class PlayerController : MonoBehaviour {
         Destroy (gameObject);
     }
 
-	void HitEffects(Collider2D col){
+    void HitEffects()
+    {
+        //Debug.Log(name + " Hiting");
+        mainCamera.GetComponent<CameraShake>().ShakeCamera(0.8f, 1f);
+        AudioSource.PlayClipAtPoint(hitSound, transform.position);
+
+    }
+
+    void HitEffects(Collider2D col){
         //Debug.Log(name + " Hiting");
         mainCamera.GetComponent<CameraShake>().ShakeCamera(0.8f, 1f);
 		Instantiate(HitParticle, new Vector3(col.transform.position.x, col.transform.position.y, 0), Quaternion.identity);
@@ -141,4 +155,57 @@ public class PlayerController : MonoBehaviour {
 	public int GetHealth(){
 		return currentHealth;
 	}
+
+    #region IDamagable;
+    public void Damage(int damageTaken)
+    {
+        currentHealth -= damageTaken;
+        IfDie();
+        HitEffects();
+    }
+
+    public void Damage(int damageTaken, DamageTypes damageType)
+    {
+        Damage(damageTaken);
+    }
+
+    public void Healing(int healing)
+    {
+        currentHealth += healing;
+    }
+
+    public int GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
+    public int GetCurrentHealth()
+    {
+        return currentHealth;
+    }
+
+    public void SetHealth(int newHealth)
+    {
+        currentHealth = newHealth;
+        IfDie();
+    }
+
+    public void SetMaxHealth(int newMaxHealth)
+    {
+        maxHealth = newMaxHealth;
+    }
+
+    public void Kill()
+    {
+        SetHealth(0);
+    }
+    #endregion
+
+    void IfDie()
+    {
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
 }
