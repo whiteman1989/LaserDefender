@@ -34,6 +34,7 @@ public class Shield : MonoBehaviour, IDamageble<int>, IAttached {
         shieldCurrentEnergy = shieldMaxEnergy;
         shieldCollider = GetComponent<Collider2D>();
         shieldParticles = GetComponentsInChildren<ParticleSystem>();
+		InvokeRepeating ("Regeneration", 0.0000001f, 1f);
     }
 
     // Update is called once per frame
@@ -117,6 +118,16 @@ public class Shield : MonoBehaviour, IDamageble<int>, IAttached {
 
 
     }
+
+	void Regeneration()
+	{
+		if (shieldCurrentEnergy < shieldMaxEnergy)
+		{
+			shieldCurrentEnergy += (int)(shieldEnergyRegeneration);
+			if (shieldCurrentEnergy > shieldMaxEnergy) {shieldCurrentEnergy = shieldMaxEnergy;}
+			Debug.Log ("new shield en = " + shieldCurrentEnergy);
+		}
+	}
 
 
     #region Particles

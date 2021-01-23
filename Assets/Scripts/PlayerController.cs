@@ -61,18 +61,7 @@ public class PlayerController : MonoBehaviour, IDamageble<int> {
 
         Move();
     }
-
-   /* void OnTriggerEnter2D(Collider2D col){
-		Projectile bullet = col.gameObject.GetComponent<Projectile> ();
-		if (bullet) {
-			currentHealth -= bullet.GetDamage();
-			HitEffects(col);
-			if (currentHealth <=0 ){
-				Die ();
-			}
-			//Debug.Log("Hit by a projectile "+currentHealth);
-		}
-	} */
+		
 
     private void Move()
     {
