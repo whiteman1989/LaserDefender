@@ -111,7 +111,7 @@ public class Shield : MonoBehaviour, IDamageble<int>, IAttached {
     void IfDeath()
     {
         bool isNotDead = shieldCurrentEnergy > 0;
-        Debug.Log("isNotDead " + isNotDead);
+        //Debug.Log("isNotDead " + isNotDead);
         shieldCollider.enabled = isNotDead;
         animator.SetBool("Empty", !isNotDead);
 
